@@ -1,6 +1,6 @@
 {
-	"name": "pomodoro",
-	"displayName": "pomodoro",
+	"name": "focus-time",
+	"displayName": "Focus Time",
 	"description": "",
 	"version": "0.0.1",
 	"engines": {
@@ -10,14 +10,47 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.helloWorld"
+		"*"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
+		"configuration": {
+            "type": "object",
+            "title": "Pomodoro",
+            "properties": {
+                "intervalLength": {
+                    "type": "number",
+                    "default": 25,
+                    "description": "Interval length (minutes)"
+				},
+				"pauseLength": {
+                    "type": "number",
+                    "default": 5,
+                    "description": "Interval length (minutes)"
+				},
+				"cycles": {
+                    "type": "number",
+                    "default": 3,
+                    "description": "Interval length (minutes)"
+				}
+            }
+        },
 		"commands": [
 			{
-				"command": "extension.helloWorld",
-				"title": "Hello World"
+				"command": "extension.startPomodoro",
+				"title": "Start Pomodoro"
+			},
+			{
+				"command": "extension.pausePomodoro",
+				"title": "Pause Pomodoro"
+			},
+			{
+				"command": "extension.resetPomodoro",
+				"title": "Reset Pomodoro"
+			},
+			{
+				"command": "extension.Pomodoro",
+				"title": "Pomodoro"
 			}
 		]
 	},

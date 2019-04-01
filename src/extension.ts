@@ -1,27 +1,101 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import { workspace } from 'vscode';
 
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
-export function activate(context: vscode.ExtensionContext) {
+let myStatusBarItem: vscode.StatusBarItem;
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-		console.log('Congratulations, your extension "pomodoro" is now active!');
+let intervalLengthMin : number | any = workspace.getConfiguration().get("intervalLength");
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('extension.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
+let currentWorkTimeMin = intervalLengthMin;
+let currentWorkTimeSec = intervalLengthMin * 60;
+let statusBarText = "";
+let paused = false;
+let running = false;
+let timer: NodeJS.Timer | null = null;
 
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World!');
-	});
+const startPomodoro = 'extension.startPomodoro';
+const pausePomodoro = 'extension.pausePomodoro';
+const resetPomodoro = 'extension.resetPomodoro';
+const Pomodoro = 'extension.Pomodoro';
 
-	context.subscriptions.push(disposable);
+export function activate({ subscriptions }: vscode.ExtensionContext) {
+
+	console.log('Focus time activated.');
+
+	subscriptions.push(vscode.commands.registerCommand(startPomodoro, () => {
+		handleStartPomodoro();
+	}));
+
+	subscriptions.push(vscode.commands.registerCommand(pausePomodoro, () => {
+		handlePausePomodoro();
+	}));
+
+	subscriptions.push(vscode.commands.registerCommand(resetPomodoro, () => {
+		handleResetPomodoro();
+	}));
+
+	subscriptions.push(vscode.commands.registerCommand(Pomodoro, () => {
+		runPomodoro();
+	}));
+
+	myStatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right);
+	subscriptions.push(myStatusBarItem);
+
+	runPomodoro();
+	myStatusBarItem.show();
+
 }
 
-// this method is called when your extension is deactivated
+function runPomodoro() {
+	if (running == false) {
+		myStatusBarItem.text = "Start";
+		myStatusBarItem.tooltip = "Start Pomodoro timer";
+		myStatusBarItem.command = startPomodoro;
+	} else if (running && paused == false) {
+		handleStartPomodoro();
+	} else if (running && paused == true) {
+		handlePausePomodoro();
+	}
+}
+
+function handleStartPomodoro() {
+	if (!timer) {
+		timer = setInterval(setTime, 1000);
+	}
+	vscode.window.showInformationMessage(`Pomodoro timer set`);
+	myStatusBarItem.command = pausePomodoro;
+	myStatusBarItem.tooltip = "Click to start";
+}
+
+function handlePausePomodoro() {
+	if (timer) {
+		clearInterval(timer);
+		timer = null;
+	}
+	vscode.window.showInformationMessage(`Pomodoro timer paused`);
+	myStatusBarItem.command = startPomodoro;
+	myStatusBarItem.text = "Paused";
+	myStatusBarItem.tooltip = "Click to resume";
+}
+
+function handleResetPomodoro() {
+	if (timer) {
+		clearInterval(timer);
+		timer = null;
+		currentWorkTimeSec = currentWorkTimeMin * 60;
+	}
+}
+
+function setTime() {
+	currentWorkTimeSec -= 1;
+	myStatusBarItem.text = showStatusBar();
+}
+
+function showStatusBar() {
+	let workTimeMinLabel = Math.floor(currentWorkTimeSec/60).toString();
+	let workTimeSecLabel = (currentWorkTimeSec - Math.floor(currentWorkTimeSec/60)*60).toString();
+	statusBarText = `⏱${workTimeMinLabel}:${workTimeSecLabel}`;
+	return statusBarText;
+}
+
+
 export function deactivate() {}
