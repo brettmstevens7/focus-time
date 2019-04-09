@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-// import { workspace } from 'vscode';
+import { workspace, window, ViewColumn } from 'vscode';
 
 import {
   INTERVAL_LENGTH_MIN,
@@ -7,6 +7,12 @@ import {
   RESUME_LABEL,
   RESET_LABEL
 } from "./constants";
+
+import { 
+	storePayload, 
+	createMetrics,
+	getMetricsFile 
+} from "./util";
 
 // initialize status bar
 let myStatusBarItem: vscode.StatusBarItem;
@@ -30,13 +36,14 @@ let pomodoroState = {
 }
 
 // initialize event stream
-let eventStream: any[] = [];
+// let eventStream: any[] = [];
 
 // commands
 const startPomodoro = 'extension.startPomodoro';
 const pausePomodoro = 'extension.pausePomodoro';
 const resetPomodoro = 'extension.resetPomodoro';
 const Pomodoro = 'extension.Pomodoro';
+const pomodoroMetrics = 'extension.getPomodoroMetrics';
 
 export function activate({ subscriptions }: vscode.ExtensionContext) {
 
@@ -58,23 +65,16 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
 		runPomodoro();
 	}));
 
+	subscriptions.push(vscode.commands.registerCommand(pomodoroMetrics, () => {
+		getPomodoroMetrics();
+	}));
+
 	myStatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right);
 	subscriptions.push(myStatusBarItem);
 
 	runPomodoro();
 	myStatusBarItem.show();
 
-}
-
-function logPomodoroEvent() {
-	// update the remaining seconds and time
-	pomodoroState.remaining_seconds = currentWorkTimeSec;
-	pomodoroState.time = new Date().toLocaleTimeString();
-	//console.log(pomodoroState);
-
-	// push the last event to a new array 
-	eventStream.push(pomodoroState);
-	console.log(eventStream);
 }
 
 function runPomodoro() {
@@ -186,6 +186,33 @@ function getStatusBarText() {
 	}
 	statusBarText = `⏱${workTimeMinLabel}:${workTimeSecLabel}`;
 	return statusBarText;
+}
+
+function logPomodoroEvent() {
+	// update the remaining seconds and time
+	pomodoroState.remaining_seconds = currentWorkTimeSec;
+	pomodoroState.time = new Date().toLocaleTimeString();
+	//console.log(pomodoroState);
+
+	// push the last event to a new array 
+	// eventStream.push(pomodoroState);
+	// console.log(eventStream);
+
+	// store the payload as a new row locally
+	storePayload(pomodoroState);
+}
+
+function getPomodoroMetrics() {
+	// generate the metrics file
+	createMetrics();
+
+	// open the metrics file
+	let filePath = getMetricsFile();
+	workspace.openTextDocument(filePath).then(doc => {
+		window.showTextDocument(doc, ViewColumn.One, false);
+	});
+
+
 }
 
 export function deactivate() {}

@@ -51,8 +51,19 @@
 			{
 				"command": "extension.Pomodoro",
 				"title": "Pomodoro"
+			},
+			{
+				"command": "extension.getPomodoroMetrics",
+				"title": "Get Pomodoro Metrics"
 			}
-		]
+		],
+		"menus": {
+            "commandPalette": [
+                {
+                    "command": "extension.getPomodoroMetrics"
+                }
+            ]
+        }
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
