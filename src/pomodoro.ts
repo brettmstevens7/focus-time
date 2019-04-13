@@ -11,13 +11,13 @@ import {
     resetPomodoroCmd,
     pomodoroMetricsCmd,
     pomodoroCmd
-  } from "./constants";
+  } from "./Constants";
 
 import { 
 	storePayload, 
 	createMetrics,
 	getMetricsFile 
-} from "./util";
+} from "./Util";
 
 import { getStatusBarItem } from "./extension";
 

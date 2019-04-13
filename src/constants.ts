@@ -14,3 +14,4 @@ export const pausePomodoroCmd = 'extension.pausePomodoroCmd';
 export const resetPomodoroCmd = 'extension.resetPomodoroCmd';
 export const pomodoroCmd = 'extension.PomodoroCmd';
 export const pomodoroMetricsCmd = 'extension.getPomodoroMetricsCmd';
+export const toggleDoNotDisturbCmd = 'extension.toggleDoNotDisturbCmd';

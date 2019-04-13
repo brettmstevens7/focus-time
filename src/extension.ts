@@ -5,8 +5,9 @@ import {
   pausePomodoroCmd,
   resetPomodoroCmd,
   pomodoroMetricsCmd,
-  pomodoroCmd
-} from "./constants";
+  pomodoroCmd,
+	toggleDoNotDisturbCmd
+} from "./Constants";
 
 import {
   handleRunPomodoro,
@@ -14,7 +15,11 @@ import {
   handlePausePomodoro,
 	handleResetPomodoro,
 	handleGetPomodoroMetrics
-} from "./pomodoro";
+} from "./Pomodoro";
+
+import {
+  toggleDoNotDisturb
+} from "./DesktopNotifications";
 
 // initialize status bar
 let myStatusBarItem: vscode.StatusBarItem;
@@ -48,6 +53,10 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
 
 	subscriptions.push(vscode.commands.registerCommand(pomodoroMetricsCmd, () => {
 		handleGetPomodoroMetrics();
+	}));
+
+	subscriptions.push(vscode.commands.registerCommand(toggleDoNotDisturbCmd, () => {
+		toggleDoNotDisturb();
 	}));
 
 	myStatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right);

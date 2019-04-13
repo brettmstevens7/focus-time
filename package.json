@@ -15,26 +15,26 @@
 	"main": "./out/extension.js",
 	"contributes": {
 		"configuration": {
-            "type": "object",
-            "title": "Pomodoro",
-            "properties": {
-                "intervalLength": {
-                    "type": "number",
-                    "default": 25,
-                    "description": "Interval length (minutes)"
+			"type": "object",
+			"title": "Pomodoro",
+			"properties": {
+				"intervalLength": {
+					"type": "number",
+					"default": 25,
+					"description": "Interval length (minutes)"
 				},
 				"pauseLength": {
-                    "type": "number",
-                    "default": 5,
-                    "description": "Interval length (minutes)"
+					"type": "number",
+					"default": 5,
+					"description": "Interval length (minutes)"
 				},
 				"cycles": {
-                    "type": "number",
-                    "default": 3,
-                    "description": "Interval length (minutes)"
+					"type": "number",
+					"default": 3,
+					"description": "Interval length (minutes)"
 				}
-            }
-        },
+			}
+		},
 		"commands": [
 			{
 				"command": "extension.startPomodoroCmd",
@@ -55,15 +55,22 @@
 			{
 				"command": "extension.getPomodoroMetricsCmd",
 				"title": "Get Pomodoro Metrics"
+			},
+			{
+				"command": "extension.toggleDoNotDisturbCmd",
+				"title": "Do not disturb"
 			}
 		],
 		"menus": {
-            "commandPalette": [
-                {
-                    "command": "extension.getPomodoroMetricsCmd"
-                }
-            ]
-        }
+			"commandPalette": [
+				{
+					"command": "extension.getPomodoroMetricsCmd"
+				},
+				{
+					"command": "extension.toggleDoNotDisturbCmd"
+				}
+			]
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
@@ -78,5 +85,9 @@
 		"tslint": "^5.12.1",
 		"@types/node": "^8.10.25",
 		"@types/mocha": "^2.2.42"
+	},
+	"dependencies": {
+		"@sindresorhus/do-not-disturb": "^1.0.0",
+		"dark-mode-cli": "^2.0.0"
 	}
 }

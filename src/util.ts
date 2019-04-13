@@ -70,6 +70,10 @@ export function createMetrics() {
     );
 }
 
+export function isMac() {
+    return process.platform.indexOf("darwin") !== -1;
+}
+
 export function isWindows() {
     return process.platform.indexOf("win32") !== -1;
 }
