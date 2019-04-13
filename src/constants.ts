@@ -16,3 +16,5 @@ export const pomodoroCmd = 'extension.PomodoroCmd';
 export const pomodoroMetricsCmd = 'extension.getPomodoroMetricsCmd';
 export const toggleDoNotDisturbCmd = 'extension.toggleDoNotDisturbCmd';
 export const toggleDarkModeCmd = `extension.toggleDarkModeCmd`;
+export const toggleDockPositionCmd = `extension.toggleDockPositionCmd`;
+export const toggleDockCmd = `extension.toggleDockCmd`;
