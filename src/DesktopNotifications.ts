@@ -1,3 +1,6 @@
+import * as vscode from 'vscode';
+import { exec } from 'child_process';
+
 const doNotDisturb = require('@sindresorhus/do-not-disturb');
 
 import { isMac } from "./Util";
@@ -7,10 +10,12 @@ export async function toggleDoNotDisturb() {
       let isEnabled = await doNotDisturb.isEnabled();
       if (isEnabled) {
         await doNotDisturb.disable();
-        console.log("Disabled!");
+        vscode.window.showInformationMessage('Do Not Disturb is now disabled');
+        console.log("Do not disturb disabled!");
       } else {
         await doNotDisturb.enable();
-        console.log("Enabled!)");
+        vscode.window.showInformationMessage('Do Not Disturb is now enabled');
+        console.log("Do not disturb enabled!");
       }
     }
 
@@ -22,5 +27,12 @@ export async function toggleDoNotDisturb() {
 }
 
 export async function toggleDarkMode() {
-// TBD
+    let darkModeCmd = `tell application "System Events"
+        tell appearance preferences
+        set dark mode to not dark mode
+        end tell
+        end tell`;
+    
+    exec(darkModeCmd);
+    console.log("Dark mode enabled!");    
 }

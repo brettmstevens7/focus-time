@@ -58,7 +58,11 @@
 			},
 			{
 				"command": "extension.toggleDoNotDisturbCmd",
-				"title": "Do not disturb"
+				"title": "Toggle do not disturb"
+			},
+			{
+				"command": "extension.toggleDarkModeCmd",
+				"title": "Toggle dark mode"
 			}
 		],
 		"menus": {
@@ -68,6 +72,9 @@
 				},
 				{
 					"command": "extension.toggleDoNotDisturbCmd"
+				},
+				{
+					"command": "extension.toggleDarkModeCmd"
 				}
 			]
 		}
@@ -87,7 +94,6 @@
 		"@types/mocha": "^2.2.42"
 	},
 	"dependencies": {
-		"@sindresorhus/do-not-disturb": "^1.0.0",
-		"dark-mode-cli": "^2.0.0"
+		"@sindresorhus/do-not-disturb": "^1.0.0"
 	}
 }

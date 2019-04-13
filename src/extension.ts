@@ -6,7 +6,8 @@ import {
   resetPomodoroCmd,
   pomodoroMetricsCmd,
   pomodoroCmd,
-	toggleDoNotDisturbCmd
+	toggleDoNotDisturbCmd,
+	toggleDarkModeCmd
 } from "./Constants";
 
 import {
@@ -18,7 +19,8 @@ import {
 } from "./Pomodoro";
 
 import {
-  toggleDoNotDisturb
+	toggleDoNotDisturb,
+	toggleDarkMode
 } from "./DesktopNotifications";
 
 // initialize status bar
@@ -57,6 +59,10 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
 
 	subscriptions.push(vscode.commands.registerCommand(toggleDoNotDisturbCmd, () => {
 		toggleDoNotDisturb();
+	}));
+
+	subscriptions.push(vscode.commands.registerCommand(toggleDarkModeCmd, () => {
+		toggleDarkMode();
 	}));
 
 	myStatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right);
