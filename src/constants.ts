@@ -1,4 +1,3 @@
-import * as vscode from 'vscode';
 import { workspace } from 'vscode';
 
 // preferences
@@ -8,3 +7,10 @@ export const INTERVAL_LENGTH_SEC = INTERVAL_LENGTH_MIN * 60;
 // labels
 export const RESUME_LABEL = "Resume";
 export const RESET_LABEL = "Reset";
+
+// commands
+export const startPomodoroCmd = 'extension.startPomodoroCmd';
+export const pausePomodoroCmd = 'extension.pausePomodoroCmd';
+export const resetPomodoroCmd = 'extension.resetPomodoroCmd';
+export const pomodoroCmd = 'extension.PomodoroCmd';
+export const pomodoroMetricsCmd = 'extension.getPomodoroMetricsCmd';

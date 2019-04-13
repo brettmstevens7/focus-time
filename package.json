@@ -37,30 +37,30 @@
         },
 		"commands": [
 			{
-				"command": "extension.startPomodoro",
+				"command": "extension.startPomodoroCmd",
 				"title": "Start Pomodoro"
 			},
 			{
-				"command": "extension.pausePomodoro",
+				"command": "extension.pausePomodoroCmd",
 				"title": "Pause Pomodoro"
 			},
 			{
-				"command": "extension.resetPomodoro",
+				"command": "extension.resetPomodoroCmd",
 				"title": "Reset Pomodoro"
 			},
 			{
-				"command": "extension.Pomodoro",
+				"command": "extension.pomodoroCmd",
 				"title": "Pomodoro"
 			},
 			{
-				"command": "extension.getPomodoroMetrics",
+				"command": "extension.getPomodoroMetricsCmd",
 				"title": "Get Pomodoro Metrics"
 			}
 		],
 		"menus": {
             "commandPalette": [
                 {
-                    "command": "extension.getPomodoroMetrics"
+                    "command": "extension.getPomodoroMetricsCmd"
                 }
             ]
         }
