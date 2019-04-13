@@ -83,6 +83,12 @@
 				},
 				{
 					"command": "extension.toggleDarkModeCmd"
+				},
+				{
+					"command": "extension.toggleDockPositionCmd"
+				},
+				{
+					"command": "extension.toggleDockCmd"
 				}
 			]
 		}
