@@ -1,6 +1,7 @@
 const fs = require("fs");
 const os = require("os");
 
+// create a .focus_time directory
 export function getDirectory(){
     const homedir = os.homedir();
     let focusTimeDataDir = homedir;
@@ -18,6 +19,7 @@ export function getDirectory(){
     return focusTimeDataDir;
 }
 
+// create a data.json file to store event payloads
 export function getDataStoreFile() {
     let file = getDirectory();
     if (isWindows()) {
@@ -28,16 +30,18 @@ export function getDataStoreFile() {
     return file;
 }
 
+// create a metrics file to show data via the command menu
 export function getMetricsFile() {
     let file = getDirectory();
     if (isWindows()) {
-        file += "\\metrics.json";
+        file += "\\metrics.txt";
     } else {
-        file += "/metrics.json";
+        file += "/metrics.txt";
     }
     return file;
 }
 
+// store payloads in data store file
 export function storePayload(payload: any) {
     fs.appendFile(
         getDataStoreFile(),
@@ -52,30 +56,19 @@ export function storePayload(payload: any) {
     );
 }
 
-export function createMetrics() {
-    //const events = getDataAsJson();
-
-    // CODE TO GENERATE SUMMARY METRICS HERE 
-
+// 
+export function viewMetrics(data: string) {
     fs.writeFile(
         getMetricsFile(),
-        "We'll show you some cool data soon!",
+        data,
         (        err: { message: any; }) => {
             if (err)
                 console.log(
-                    "Focus Time: error adding event to data store: ",
+                    "Focus Time: error generating metrics: ",
                     err.message
                 );
         }
     );
-}
-
-export function isMac() {
-    return process.platform.indexOf("darwin") !== -1;
-}
-
-export function isWindows() {
-    return process.platform.indexOf("win32") !== -1;
 }
 
 // reads data from local file into an array of JSON objects
@@ -100,4 +93,12 @@ export function getDataAsJson() {
     }
 
     return events ? events : [];
+}
+
+export function isMac() {
+    return process.platform.indexOf("darwin") !== -1;
+}
+
+export function isWindows() {
+    return process.platform.indexOf("win32") !== -1;
 }
