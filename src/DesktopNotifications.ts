@@ -27,11 +27,12 @@ export async function toggleDoNotDisturb() {
 }
 
 export async function toggleDarkMode() {
-    let darkModeCmd = `tell application "System Events"
-        tell appearance preferences
-        set dark mode to not dark mode
-        end tell
-        end tell`;
+    let darkModeCmd = `osascript -e \'
+        tell application "System Events"
+          tell appearance preferences
+            set dark mode to not dark mode
+          end tell
+        end tell \'`;
     
     exec(darkModeCmd);
     console.log("Dark mode enabled!");    
