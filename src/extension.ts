@@ -2,12 +2,14 @@ import * as vscode from 'vscode';
 
 import {
 	startPomodoroCmd,
-  pausePomodoroCmd,
-  resetPomodoroCmd,
-  pomodoroMetricsCmd,
-  pomodoroCmd,
+	pausePomodoroCmd,
+	resetPomodoroCmd,
+	pomodoroMetricsCmd,
+	pomodoroCmd,
 	toggleDoNotDisturbCmd,
-	toggleDarkModeCmd
+	toggleDarkModeCmd,
+	toggleDockPositionCmd,
+	toggleDockCmd
 } from "./Constants";
 
 import {
@@ -20,7 +22,9 @@ import {
 
 import {
 	toggleDoNotDisturb,
-	toggleDarkMode
+	toggleDarkMode,
+	toggleDockPosition,
+	toggleDock
 } from "./DesktopNotifications";
 
 // initialize status bar
@@ -63,6 +67,14 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
 
 	subscriptions.push(vscode.commands.registerCommand(toggleDarkModeCmd, () => {
 		toggleDarkMode();
+	}));
+
+	subscriptions.push(vscode.commands.registerCommand(toggleDockPositionCmd, () => {
+		toggleDockPosition();
+	}));
+
+	subscriptions.push(vscode.commands.registerCommand(toggleDockCmd, () => {
+		toggleDock();
 	}));
 
 	myStatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right);

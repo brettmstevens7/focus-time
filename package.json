@@ -63,6 +63,14 @@
 			{
 				"command": "extension.toggleDarkModeCmd",
 				"title": "Toggle dark mode"
+			},
+			{
+				"command": "extension.toggleDockPositionCmd",
+				"title": "Toggle dock position"
+			},
+			{
+				"command": "extension.toggleDockCmd",
+				"title": "Toggle dock"
 			}
 		],
 		"menus": {

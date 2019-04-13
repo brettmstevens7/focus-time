@@ -27,12 +27,51 @@ export async function toggleDoNotDisturb() {
 }
 
 export async function toggleDarkMode() {
-    let darkModeCmd = `tell application "System Events"
-        tell appearance preferences
-        set dark mode to not dark mode
-        end tell
-        end tell`;
+    let darkModeCmd = `osascript -e \'
+        tell application "System Events"
+          tell appearance preferences
+            set dark mode to not dark mode
+          end tell
+        end tell \'`;
     
     exec(darkModeCmd);
     console.log("Dark mode enabled!");    
+}
+
+// change the position of the dock depending on user input
+export async function toggleDockPosition() {
+  
+  let newPosition = await vscode.window.showInputBox({ placeHolder: 'left, right, or bottom?' });
+
+  function setPosition(position: any) {
+    return `osascript -e \'
+      tell application "System Events"
+        tell dock preferences
+          set properties to {screen edge:${position}}
+        end tell
+      end tell \'`;
+    }
+  
+  if (newPosition) {
+    exec(setPosition(newPosition));
+    console.log("Dock position updated");
+  }
+}
+
+// hide and unhide the dock
+export async function toggleDock() {
+  let toggleDockCmd = `osascript -e \'
+    tell application "System Events"
+      tell dock preferences
+        set x to autohide
+        if x is false then
+          set properties to {autohide:true}
+        else 
+          set properties to {autohide:false}
+        end if
+      end tell
+    end tell \'`;
+  
+  exec(toggleDockCmd);
+  console.log("Dock toggled!");
 }
